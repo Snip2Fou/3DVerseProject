@@ -18,7 +18,7 @@
             window.addEventListener('keydown', setupKeyboardLayout);
             window.addEventListener('resize', Resize);
 
-            const connectionInfo = await SDK3DVerse.webAPI.createOrJoinSession(AppConfig.sceneUUID);
+            const connectionInfo = await SDK3DVerse.webAPI.createSession(AppConfig.sceneUUID);
 
             SDK3DVerse.setViewports(null);
             SetResolution();
@@ -148,22 +148,87 @@
             }
         }
 
-        window.addEventListener("click", (event) => { });
-
-        onclick = (event) => {
-            clicked = SDK3DVerse.engineAPI.castScreenSpaceRay(event.clientX, event.clientY, true, false, false);
+        window.addEventListener("click", (event) => {
+            clicked = SDK3DVerse.engineAPI.castScreenSpaceRay(event.clientX, event.clientY, false, false, false);
             clicked.then(resultat => {
-                console.log(resultat);
-                if (resultat["entity"] != null) {
-                    console.log("dd");
-                    resultat["entity"].setOrientation([0,1,0,0]);
-                } else {
-                    console.log("ff");
+                if (resultat["entity"] != null && resultat["entity"]["components"]["euid"]["value"] == "1082040b-2179-4fa6-b270-55b514760633") {
+                    EnigmeTuyau(resultat);
                 }
-                SDK3DVerse.actionMap.propagate();
             });
-        };
+            SDK3DVerse.actionMap.propagate();
+            SDK3DVerse.engineAPI.propagateChanges();
+        });
 
+        function EnigmeTuyau(resultat) {
+            if (resultat["entity"]["components"]["lineage"]["value"][0] == "724d6b61-abf7-4c1d-b943-ee9e694d073e") {
+                LeftActionner();
+            } else if (resultat["entity"]["components"]["lineage"]["value"][0] == "1dab430c-708b-4529-84cc-5d4de05c3765") {
+                MidlleActionner();
+            } else if (resultat["entity"]["components"]["lineage"]["value"][0] == "d55b5ded-0827-4371-ae66-11e980d5d28d") {
+                RightActionner();
+            }
+
+        }
+
+        function LeftActionner(){
+            SDK3DVerse.engineAPI.findEntitiesByEUID("a08a6de5-ab91-46e3-9543-35f7adbe04e2").then(resultat_search => {
+                if (resultat_search[0]["components"]["local_transform"]["eulerOrientation"][0] == 180) {
+                    resultat_search[0].setOrientation([0.7071067690849304, 0, 0, 0.7071067690849304]);
+                } else {
+                    resultat_search[0].setOrientation([1, 0, 0, 0]);
+                }
+                console.log(resultat_search);
+            });
+            SDK3DVerse.engineAPI.findEntitiesByEUID("92fe0f4f-83d5-47f7-a08c-6f29e1a8a353").then(resultat_search2 => {
+                if (resultat_search2[0]["components"]["local_transform"]["eulerOrientation"][0] == 180) {
+                    resultat_search2[0].setOrientation([0.7071067690849304, 0, 0, 0.7071067690849304]);
+                } else {
+                    resultat_search2[0].setOrientation([1, 0, 0, 0]);
+                }
+                console.log(resultat_search2);
+            });
+        }
+
+        function MidlleActionner() {
+            SDK3DVerse.engineAPI.findEntitiesByEUID("92c6f88c-50fe-4385-ad52-80756896f61c").then(resultat_search => {
+                if (resultat_search[0]["components"]["local_transform"]["eulerOrientation"][0] == 180) {
+                    resultat_search[0].setOrientation([0.7071067690849304, 0, 0, 0.7071067690849304]);
+                } else {
+                    resultat_search[0].setOrientation([1, 0, 0, 0]);
+                }
+            });
+            SDK3DVerse.engineAPI.findEntitiesByEUID("92fe0f4f-83d5-47f7-a08c-6f29e1a8a353").then(resultat_search2 => {
+                if (resultat_search2[0]["components"]["local_transform"]["eulerOrientation"][0] == 180) {
+                    resultat_search2[0].setOrientation([0.7071067690849304, 0, 0, 0.7071067690849304]);
+                } else {
+                    resultat_search2[0].setOrientation([1, 0, 0, 0]);
+                }
+            });
+        }
+
+        function RightActionner() {
+            SDK3DVerse.engineAPI.findEntitiesByEUID("93ef8c97-3c98-45e5-b7a8-93aee0b9a65f").then(resultat_search => {
+                if (resultat_search[0]["components"]["local_transform"]["eulerOrientation"][0] == 180) {
+                    resultat_search[0].setOrientation([0.7071067690849304, 0, 0, 0.7071067690849304]);
+                } else {
+                    resultat_search[0].setOrientation([1, 0, 0, 0]);
+                }
+            });
+            SDK3DVerse.engineAPI.findEntitiesByEUID("109be745-75cc-4d04-babc-0fd09dde5e3b").then(resultat_search2 => {
+                if (resultat_search2[0]["components"]["local_transform"]["eulerOrientation"][0] == 180) {
+                    resultat_search2[0].setOrientation([0.7071067690849304, 0, 0, 0.7071067690849304]);
+                } else {
+                    resultat_search2[0].setOrientation([1, 0, 0, 0]);
+                }
+            });
+            SDK3DVerse.engineAPI.findEntitiesByEUID("92c6f88c-50fe-4385-ad52-80756896f61c").then(resultat_search2 => {
+                if (resultat_search2[0]["components"]["local_transform"]["eulerOrientation"][0] == 180) {
+                    resultat_search2[0].setOrientation([0.7071067690849304, 0, 0, 0.7071067690849304]);
+                } else {
+                    resultat_search2[0].setOrientation([1, 0, 0, 0]);
+                }
+            });
+        }
     </SCRIPT>
 
 </head>
